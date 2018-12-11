@@ -1,45 +1,20 @@
 <template>
-  <view class="container">
-    <text-input
-      :style="{height: 40, width: 200, borderColor: 'gray', borderWidth: 1}"
-      v-model="messageText"
-    />
-    <button
-      :on-press="saveMessage"
-      title="Save"
-    />
-    <text v-for="(message, index) in messages" :key="index">{{ message }}</text>
-  </view>
+  <app-navigation></app-navigation>
 </template>
 <script>
-  import Store from './store';
-  export default {
-    data: function() {
-      return {
-        messageText: ''
-      }
-    },
-    computed: {
-      messages: function() {
-        return Store.getters.messages
-      }
-    },
-    methods: {
-      saveMessage: function() {
-        Store.dispatch('addMessage', this.messageText)
-        this.messageText = ''
-      }
-    }
+import { StackNavigator } from "vue-native-router";
+import HomeScreen from "./screens/HomeScreen.vue";
+import MessagesScreen from "./screens/MessagesScreen.vue";
+const AppNavigation = StackNavigator(
+  {
+    Home: HomeScreen,
+    Messages: MessagesScreen,
+  },
+  {
+    initialRouteName: 'Home',
   }
+);
+export default {
+    components: { AppNavigation }
+}
 </script>
-<style>
-.container {
-  background-color: white;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-}
-.text-color-primary {
-  color: blue;
-}
-</style>
