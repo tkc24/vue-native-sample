@@ -12,16 +12,21 @@
   </view>
 </template>
 <script>
+  import Store from './store';
   export default {
     data: function() {
       return {
-        messageText: '',
-        messages: []
+        messageText: ''
+      }
+    },
+    computed: {
+      messages: function() {
+        return Store.getters.messages
       }
     },
     methods: {
       saveMessage: function() {
-        this.messages.push(this.messageText)
+        Store.dispatch('addMessage', this.messageText)
         this.messageText = ''
       }
     }
